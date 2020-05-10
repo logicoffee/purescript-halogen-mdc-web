@@ -28,11 +28,11 @@ component = H.mkComponent
 
 render :: State -> H.ComponentHTML Action Slots Aff
 render _ = HH.div_
-  [ HH.slot slot 1 Button.button textButtonProps (const Nothing)
-  , HH.slot slot 2 Button.button raisedButtonProps (const Nothing)
-  , HH.slot slot 3 Button.button unelevatedButtonProps (const Nothing)
-  , HH.slot slot 4 Button.button outlinedButtonProps (const Nothing)
-  , HH.slot slot 5 Button.button disabledButtonProps (const Nothing)
+  [ HH.slot _button 1 Button.button textButtonProps (const Nothing)
+  , HH.slot _button 2 Button.button raisedButtonProps (const Nothing)
+  , HH.slot _button 3 Button.button unelevatedButtonProps (const Nothing)
+  , HH.slot _button 4 Button.button outlinedButtonProps (const Nothing)
+  , HH.slot _button 5 Button.button disabledButtonProps (const Nothing)
   ]
   where
     textButtonProps = Button.defaultProps { label = "text button" }
@@ -57,7 +57,7 @@ type Slots =
   ( button :: H.Slot (Const Void) Button.Message Int
   )
 
-slot = SProxy :: SProxy "button"
+_button = SProxy :: SProxy "button"
 
 handleAction :: Action -> H.HalogenM State Action Slots Message Aff Unit
 handleAction = case _ of

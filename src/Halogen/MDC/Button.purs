@@ -11,15 +11,15 @@ import Halogen.HTML as HH
 import Halogen.HTML.Events as HE
 import Halogen.HTML.Properties as HP
 
-data Variant
-  = Text
-  | Raised
-  | Unelevated
-  | Outlined
+data State
+  = State Props
 
 data Action
   = Initialize
   | OnClick
+
+type Input
+  = Props
 
 data Message
   = Clicked
@@ -31,6 +31,12 @@ type Props =
   , ripple :: Boolean
   , disabled :: Boolean
   }
+
+data Variant
+  = Text
+  | Raised
+  | Unelevated
+  | Outlined
 
 data IconProp
   = Before String
@@ -45,9 +51,7 @@ defaultProps =
   , disabled: false
   }
 
-data State = State Props
-
-button :: forall m.  H.Component HH.HTML (Const Void) Props Message m
+button :: forall m. H.Component HH.HTML (Const Void) Input Message m
 button = H.mkComponent
   { initialState: State
   , render
