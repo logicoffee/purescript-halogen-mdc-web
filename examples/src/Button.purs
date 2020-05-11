@@ -1,9 +1,8 @@
 module Examples.Button where
 
 import Prelude
-import Data.Const (Const)
 import Data.Maybe (Maybe (..))
-import Data.Symbol (SProxy(..))
+import Data.Const (Const)
 import Effect.Aff (Aff)
 
 import Halogen as H
@@ -15,6 +14,7 @@ type State = Unit
 data Action = Initialize
 type Input = Unit
 type Message = Void
+type Slots = ()
 
 component :: H.Component HH.HTML (Const Void) Input Message Aff
 component = H.mkComponent
@@ -28,11 +28,11 @@ component = H.mkComponent
 
 render :: State -> H.ComponentHTML Action Slots Aff
 render _ = HH.div_
-  [ HH.slot slot 1 Button.button textButtonProps (const Nothing)
-  , HH.slot slot 2 Button.button raisedButtonProps (const Nothing)
-  , HH.slot slot 3 Button.button unelevatedButtonProps (const Nothing)
-  , HH.slot slot 4 Button.button outlinedButtonProps (const Nothing)
-  , HH.slot slot 5 Button.button disabledButtonProps (const Nothing)
+  [ Button.button textButtonProps
+  , Button.button raisedButtonProps
+  , Button.button unelevatedButtonProps
+  , Button.button outlinedButtonProps
+  , Button.button disabledButtonProps
   ]
   where
     textButtonProps = Button.defaultProps { label = "text button" }
@@ -52,12 +52,6 @@ render _ = HH.div_
       { label = "disabled button"
       , disabled = true
       }
-
-type Slots =
-  ( button :: H.Slot (Const Void) Button.Message Int
-  )
-
-slot = SProxy :: SProxy "button"
 
 handleAction :: Action -> H.HalogenM State Action Slots Message Aff Unit
 handleAction = case _ of
