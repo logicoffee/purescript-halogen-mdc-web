@@ -7,6 +7,7 @@ import Data.Array ((:), concat)
 
 import Halogen.HTML as HH
 import Halogen.HTML.Properties as HP
+import Halogen.HTML.Properties.ARIA as ARIA
 import Halogen.HTML.Events as HE
 import Web.UIEvent.MouseEvent (MouseEvent)
 
@@ -73,5 +74,8 @@ button props =
           [ HP.class_ $ HH.ClassName "mdc-button__label" ]
           [ HH.text props.label ]
         icon = \iconName -> HH.i
-          [ HP.class_ $ HH.ClassName "mdc-button__icon" ]
+          [ HP.classes $
+              map HH.ClassName [ "mdc-button__icon", "material-icons" ]
+          , ARIA.hidden "true"
+          ]
           [ HH.text iconName ]

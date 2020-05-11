@@ -33,6 +33,8 @@ render _ = HH.div_
   , Button.button unelevatedButtonProps
   , Button.button outlinedButtonProps
   , Button.button disabledButtonProps
+  , Button.button textButtoWithIconProps
+  , Button.button raisedButtonWithIconProps
   ]
   where
     textButtonProps = Button.defaultProps { label = "text button" }
@@ -51,6 +53,15 @@ render _ = HH.div_
     disabledButtonProps = Button.defaultProps
       { label = "disabled button"
       , disabled = true
+      }
+    textButtoWithIconProps = Button.defaultProps
+      { label = "text button"
+      , icon = Just $ Button.Before "favorite"
+      }
+    raisedButtonWithIconProps = Button.defaultProps
+      { label = "raised button"
+      , variant = Button.Raised
+      , icon = Just $ Button.After "bookmark"
       }
 
 handleAction :: Action -> H.HalogenM State Action Slots Message Aff Unit
