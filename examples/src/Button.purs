@@ -1,4 +1,4 @@
-module Examples.Button where
+module Button where
 
 import Prelude
 import Data.Maybe (Maybe (..))
