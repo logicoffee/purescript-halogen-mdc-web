@@ -20,7 +20,7 @@ data Action
 
 component :: H.Component HH.HTML (Const Void) Unit Void Aff
 component = H.mkComponent
-  { initialState: const $ State Route.List
+  { initialState: const $ State Route.Button
   , render
   , eval: H.mkEval $ H.defaultEval
       { initialize = Just Initialize
