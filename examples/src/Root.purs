@@ -1,4 +1,4 @@
-module Examples.Root where
+module Root where
 
 import Prelude
 import Data.Const (Const)
@@ -9,9 +9,10 @@ import Effect.Aff (Aff)
 import Halogen as H
 import Halogen.HTML as HH
 
-import Examples.Button as Button
-import Examples.List as List
-import Examples.Route as Route
+import Button as Button
+import List as List
+import Drawer as Drawer
+import Route as Route
 
 data State = State Route.Route
 data Action
@@ -20,7 +21,7 @@ data Action
 
 component :: H.Component HH.HTML (Const Void) Unit Void Aff
 component = H.mkComponent
-  { initialState: const $ State Route.Button
+  { initialState: const $ State Route.Home
   , render
   , eval: H.mkEval $ H.defaultEval
       { initialize = Just Initialize
@@ -29,17 +30,26 @@ component = H.mkComponent
   }
 
 render :: State -> H.ComponentHTML Action Slots Aff
-render (State route) = case route of
-  Route.Home -> HH.div_ [ HH.text "home" ]
-  Route.Button -> HH.slot (SProxy :: _ "button") unit Button.component unit absurd
-  Route.List -> HH.slot (SProxy :: _ "list") unit List.component unit absurd
+render (State route) = HH.div_
+  [ HH.slot (SProxy :: _ "drawer") unit Drawer.component unit handleDrawerMessages
+  , case route of
+      Route.Home -> HH.div_ [ HH.text "home" ]
+      Route.Button -> HH.slot (SProxy :: _ "button") unit Button.component unit absurd
+      Route.List -> HH.slot (SProxy :: _ "list") unit List.component unit absurd
+  ]
 
 handleAction :: Action -> H.HalogenM State Action Slots Void Aff Unit
 handleAction = case _ of
   Initialize -> pure unit
   RouteChanged route -> H.put $ State route
 
+handleDrawerMessages :: Drawer.Message -> Maybe Action
+handleDrawerMessages (Drawer.Clicked route) = Just $ RouteChanged route
+
 type Slots =
-  ( button :: H.Slot (Const Void) Void Unit
-  , list :: H.Slot (Const Void) Void Unit
+  ( button :: SingleSlot
+  , list :: SingleSlot
+  , drawer :: H.Slot (Const Void) Drawer.Message Unit
   )
+
+type SingleSlot = H.Slot (Const Void) Void Unit

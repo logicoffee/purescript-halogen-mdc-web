@@ -1,4 +1,4 @@
-module Examples.Route where
+module Route where
 
 data Route
   = Home

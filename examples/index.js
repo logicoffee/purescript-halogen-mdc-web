@@ -1,4 +1,4 @@
-import Main from '../output/Examples.Main'
+import Main from '../output/Main'
 
 function main() {
     Main.main()

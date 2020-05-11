@@ -1,4 +1,4 @@
-module Examples.List where
+module List where
 
 import Prelude
 import Data.Maybe (Maybe (..))
