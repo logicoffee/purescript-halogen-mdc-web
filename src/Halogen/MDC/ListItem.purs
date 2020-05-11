@@ -9,63 +9,42 @@ import Halogen as H
 import Halogen.HTML as HH
 import Halogen.HTML.Events as HE
 import Halogen.HTML.Properties as HP
+import Web.UIEvent.MouseEvent (MouseEvent)
 
-data State
-  = State Input
-
-data Action
-  = Initialize
-  | OnClick
-
-type Input
-  = Props
-
-data Message
-  = Clicked
-
-type Props =
+type Props a =
   { lineNumber :: LineNumber
   , text :: String
   , secondaryText :: String
+  , onClick :: MouseEvent -> Maybe a
   }
 
 data LineNumber
   = Single
   | Two
 
-item :: forall m. H.Component HH.HTML (Const Void) Input Message m
-item = H.mkComponent
-  { initialState: State
-  , render
-  , eval: H.mkEval evalSpec
+defaultProps :: forall a. Props a
+defaultProps =
+  { lineNumber: Single
+  , text: ""
+  , secondaryText: ""
+  , onClick: const Nothing
   }
-  where
-  render :: State -> H.ComponentHTML Action () m
-  render (State props) =
-    HH.li
-      [ HP.class_ $ HH.ClassName "mdc-list-item"
-      , HE.onClick $ \_ -> Just OnClick
-      ]
-      [ HH.span
-          [ HP.class_ $ HH.ClassName "mdc-list-item__text" ]
-          case props.lineNumber of
-            Single -> [ HH.text props.text ]
-            Two ->
-              [ HH.span
-                  [ HP.class_ $ HH.ClassName "mdc-list-item__primary-text" ]
-                  [ HH.text props.text ]
-              , HH.span
-                  [ HP.class_ $ HH.ClassName "mdc-list-item__secondary-text" ]
-                  [ HH.text props.secondaryText ]
-              ]
-      ]
 
-  handleAction :: Action -> H.HalogenM State Action () Message m Unit
-  handleAction = case _ of
-    Initialize -> pure unit
-    OnClick -> H.raise Clicked
-
-  evalSpec = H.defaultEval
-    { handleAction = handleAction
-    , initialize = Just Initialize
-    }
+item :: forall w i. Props i -> HH.HTML w i
+item props = HH.li
+  [ HP.class_ $ HH.ClassName "mdc-list-item"
+  , HE.onClick props.onClick
+  ]
+  [ HH.span
+      [ HP.class_ $ HH.ClassName "mdc-list-item__text" ]
+      case props.lineNumber of
+        Single -> [ HH.text props.text ]
+        Two ->
+          [ HH.span
+              [ HP.class_ $ HH.ClassName "mdc-list-item__primary-text" ]
+              [ HH.text props.text ]
+          , HH.span
+              [ HP.class_ $ HH.ClassName "mdc-list-item__secondary-text" ]
+              [ HH.text props.secondaryText ]
+          ]
+  ]
