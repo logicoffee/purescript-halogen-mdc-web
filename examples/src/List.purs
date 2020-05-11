@@ -1,6 +1,7 @@
 module Examples.List where
 
 import Prelude
+import Data.Maybe (Maybe (..))
 import Data.Const (Const)
 import Effect.Aff (Aff)
 
@@ -24,14 +25,29 @@ component = H.mkComponent
   where
     render :: State -> H.ComponentHTML Action () Aff
     render _ = HH.div_
-      [ List.list
-          List.defaultProps
-          [ Item.item $ Item.defaultProps
-              { text = "first element"
-              }
-          , Item.item $ Item.defaultProps
-              { text = "second element"
-              }
-          ]
+      [ HH.div_
+        [ List.list
+            List.defaultProps
+            [ Item.item $ Item.defaultProps
+                { text = "first element"
+                }
+            , Item.item $ Item.defaultProps
+                { text = "second element"
+                }
+            ]
+        ]
+      , HH.div_
+        [ List.list
+            List.defaultProps
+            [ Item.item $ Item.defaultProps
+                { text = "first element"
+                , icon = Just "favorite"
+                }
+            , Item.item $ Item.defaultProps
+                { text = "second element"
+                , icon = Just "bookmark"
+                }
+            ]
+        ]
       ]
     evalSpec = H.defaultEval
