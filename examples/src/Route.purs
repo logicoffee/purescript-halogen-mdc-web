@@ -4,3 +4,4 @@ data Route
   = Home
   | Button
   | List
+  | Layout
