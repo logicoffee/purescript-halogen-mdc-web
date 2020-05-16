@@ -13,6 +13,7 @@ import Button as Button
 import List as List
 import Drawer as Drawer
 import Route as Route
+import Layout as Layout
 
 data State = State Route.Route
 data Action
@@ -36,6 +37,7 @@ render (State route) = HH.div_
       Route.Home -> HH.div_ [ HH.text "home" ]
       Route.Button -> HH.slot (SProxy :: _ "button") unit Button.component unit absurd
       Route.List -> HH.slot (SProxy :: _ "list") unit List.component unit absurd
+      Route.Layout -> HH.slot (SProxy :: _ "layout") unit Layout.component unit absurd
   ]
 
 handleAction :: Action -> H.HalogenM State Action Slots Void Aff Unit
@@ -50,6 +52,7 @@ type Slots =
   ( button :: SingleSlot
   , list :: SingleSlot
   , drawer :: H.Slot (Const Void) Drawer.Message Unit
+  , layout :: SingleSlot
   )
 
 type SingleSlot = H.Slot (Const Void) Void Unit

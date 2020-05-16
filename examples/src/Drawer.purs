@@ -44,6 +44,10 @@ component = H.mkComponent
           { text = "Lists"
           , onClick = const $ Just $ OnClick Route.List
           }
+        , Item.item Item.defaultProps
+          { text = "Layout"
+          , onClick = const $ Just $ OnClick Route.Layout
+          }
         ]
       ]
 
