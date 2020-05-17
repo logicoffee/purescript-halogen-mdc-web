@@ -11,12 +11,12 @@ type Props =
   }
 
 data Variant
-  = Headline1
-  | Headline2
-  | Headline3
-  | Headline4
-  | Headline5
-  | Headline6
+  = H1
+  | H2
+  | H3
+  | H4
+  | H5
+  | H6
   | Subtitle1
   | Subtitle2
   | Body1
@@ -26,30 +26,32 @@ data Variant
   | Overline
 
 typography :: forall w i. Props -> HH.HTML w i
-typography props = [ HH.text props.text ] # case props.variant of
-  Headline1 -> HH.h1 [ toIProp Headline1 ]
-  Headline2 -> HH.h2 [ toIProp Headline2 ]
-  Headline3 -> HH.h3 [ toIProp Headline3 ]
-  Headline4 -> HH.h4 [ toIProp Headline4 ]
-  Headline5 -> HH.h5 [ toIProp Headline5 ]
-  Headline6 -> HH.h6 [ toIProp Headline6 ]
-  Subtitle1 -> HH.h6 [ toIProp Subtitle1 ]
-  Subtitle2 -> HH.h6 [ toIProp Subtitle2 ]
-  Body1 -> HH.p [ toIProp Body1 ]
-  Body2 -> HH.p [ toIProp Body2 ]
-  Caption -> HH.span [ toIProp Caption ]
-  Button -> HH.span [ toIProp Button ]
-  Overline -> HH.span [ toIProp Overline ]
+typography props = elem [ HH.text props.text ]
   where
-    toIProp :: forall r. Variant -> HP.IProp (class :: String | r) i
-    toIProp variant =
-      HP.class_ $ HH.ClassName $ "mdc-typography--" <> case variant of
-        Headline1 -> "headline1"
-        Headline2 -> "headline2"
-        Headline3 -> "headline3"
-        Headline4 -> "headline4"
-        Headline5 -> "headline5"
-        Headline6 -> "headline6"
+    elem = case props.variant of
+      H1 -> HH.h1 [ className ]
+      H2 -> HH.h2 [ className ]
+      H3 -> HH.h3 [ className ]
+      H4 -> HH.h4 [ className ]
+      H5 -> HH.h5 [ className ]
+      H6 -> HH.h6 [ className ]
+      Subtitle1 -> HH.h6 [ className ]
+      Subtitle2 -> HH.h6 [ className ]
+      Body1 -> HH.p [ className ]
+      Body2 -> HH.p [ className ]
+      Caption -> HH.span [ className ]
+      Button -> HH.span [ className ]
+      Overline -> HH.span [ className ]
+
+    className :: forall r. HP.IProp (class :: String | r) i
+    className =
+      HP.class_ $ HH.ClassName $ "mdc-typography--" <> case props.variant of
+        H1 -> "headline1"
+        H2 -> "headline2"
+        H3 -> "headline3"
+        H4 -> "headline4"
+        H5 -> "headline5"
+        H6 -> "headline6"
         Subtitle1 -> "subtitle1"
         Subtitle2 -> "subtitle2"
         Body1 -> "body1"
