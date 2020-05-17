@@ -9,7 +9,10 @@ You can edit this file as you like.
   , "effect"
   , "halogen"
   , "halogen-css"
+  , "halogen-vdom"
   , "psci-support"
+  , "strings"
+  , "unsafe-coerce"
   , "web-uievents"
   ]
 , packages = ./packages.dhall
