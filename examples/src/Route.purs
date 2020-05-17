@@ -6,3 +6,4 @@ data Route
   | List
   | Layout
   | Card
+  | Typography
