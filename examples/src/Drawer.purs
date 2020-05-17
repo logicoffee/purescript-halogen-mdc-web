@@ -49,8 +49,12 @@ component = H.mkComponent
           , onClick = const $ Just $ OnClick Route.Layout
           }
         , Item.item Item.defaultProps
-          { text = "card"
+          { text = "Card"
           , onClick = const $ Just $ OnClick Route.Card
+          }
+        , Item.item Item.defaultProps
+          { text = "Typography"
+          , onClick = const $ Just $ OnClick Route.Typography
           }
         ]
       ]
