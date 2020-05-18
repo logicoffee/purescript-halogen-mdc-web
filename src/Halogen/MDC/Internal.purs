@@ -1,5 +1,5 @@
 module Halogen.MDC.Internal
-  ( appendClassName
+  ( appendClassNames
   ) where
 
 import Prelude
@@ -13,8 +13,8 @@ import Halogen.VDom.Types as VDom
 import Halogen.VDom.DOM.Prop as DP
 import Unsafe.Coerce (unsafeCoerce)
 
-appendClassName :: forall w i. Array String -> HH.HTML w i -> HH.HTML w i
-appendClassName classNames (HH.HTML vdom) = HH.HTML case vdom of
+appendClassNames :: forall w i. Array String -> HH.HTML w i -> HH.HTML w i
+appendClassNames classNames (HH.HTML vdom) = HH.HTML case vdom of
   VDom.Elem ns n props c -> VDom.Elem ns n (appendClassNameToProps classNames props) c
   VDom.Keyed ns n props c -> VDom.Keyed ns n (appendClassNameToProps classNames props) c
   other -> other

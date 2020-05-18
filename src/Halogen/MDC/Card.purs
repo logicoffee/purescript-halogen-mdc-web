@@ -42,12 +42,12 @@ actionButtons :: forall w i. Array (HH.HTML w i) -> HH.HTML w i
 actionButtons children = HH.div
   [ HP.class_ $ HH.ClassName "mdc-card__action-buttons" ]
   $ map
-    (I.appendClassName [ "mdc-card__action", "mdc-card__action--button" ])
+    (I.appendClassNames [ "mdc-card__action", "mdc-card__action--button" ])
     children
 
 actionIcons :: forall w i. Array (HH.HTML w i) -> HH.HTML w i
 actionIcons children = HH.div
   [ HP.class_ $ HH.ClassName "mdc-card__action-icons" ]
   $ map
-    (I.appendClassName [ "mdc-card__action", "mdc-card__action--icon" ])
+    (I.appendClassNames [ "mdc-card__action", "mdc-card__action--icon" ])
     children
