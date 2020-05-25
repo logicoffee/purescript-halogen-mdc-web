@@ -1,4 +1,10 @@
-module Halogen.MDC.Button where
+module Halogen.MDC.Button
+  ( Props(..)
+  , defaultProps
+  , Variant(..)
+  , IconProp(..)
+  , button
+  ) where
 
 import Prelude
 
@@ -24,16 +30,6 @@ type Props a =
   , extraClasses :: Array HH.ClassName
   }
 
-data Variant
-  = Text
-  | Raised
-  | Unelevated
-  | Outlined
-
-data IconProp
-  = Before String
-  | After String
-
 defaultProps :: forall a. Props a
 defaultProps =
   { variant: Text
@@ -45,6 +41,16 @@ defaultProps =
   , theme: Th.Primary
   , extraClasses: []
   }
+
+data Variant
+  = Text
+  | Raised
+  | Unelevated
+  | Outlined
+
+data IconProp
+  = Before String
+  | After String
 
 button :: forall w i. Props i -> HH.HTML w i
 button props =
