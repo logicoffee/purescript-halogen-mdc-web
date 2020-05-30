@@ -2,8 +2,11 @@ module Halogen.MDC.Card where
 
 import Prelude
 
+import CSS (backgroundImage, url)
+
 import Halogen.HTML as HH
 import Halogen.HTML.Properties as HP
+import Halogen.HTML.CSS as CSS
 import Halogen.MDC.Internal as I
 
 data Variant
@@ -32,11 +35,16 @@ cardWith variant = HH.div [ HP.classes classNames ]
 primaryAction :: forall w i. Array (HH.HTML w i) -> HH.HTML w i
 primaryAction = HH.div [ HP.class_ cls.cardPrimaryAction ]
 
-media :: forall w i. Array (HH.HTML w i) -> HH.HTML w i
-media = HH.div [ HP.class_ cls.cardMedia ]
+type MediaProps =
+  { shape :: Shape
+  , url :: String
+  }
 
-mediaWith :: Shape -> forall w i. Array (HH.HTML w i) -> HH.HTML w i
-mediaWith shape = HH.div [ HP.classes [ cls.cardMedia, cls.cardMediaShape shape ] ]
+media :: MediaProps -> forall w i. Array (HH.HTML w i) -> HH.HTML w i
+media props = HH.div
+  [ HP.classes [ cls.cardMedia, cls.cardMediaShape props.shape ]
+  , CSS.style $ backgroundImage $ url props.url
+  ]
 
 mediaContent :: forall w i. Array (HH.HTML w i) -> HH.HTML w i
 mediaContent = HH.div [ HP.class_ cls.cardMediaContent ]
