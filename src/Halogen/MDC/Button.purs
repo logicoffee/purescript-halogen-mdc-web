@@ -8,8 +8,8 @@ module Halogen.MDC.Button
 
 import Prelude
 
-import Data.Maybe (Maybe (..))
-import Data.Tuple.Nested ((/\))
+import Data.Maybe (Maybe(..))
+import Data.Tuple (Tuple(..))
 
 import Halogen.HTML as HH
 import Halogen.HTML.Properties as HP
@@ -48,6 +48,13 @@ data Variant
   | Unelevated
   | Outlined
 
+instance showVariant :: Show Variant where
+  show = case _ of
+    Text -> ""
+    Raised -> "raised"
+    Unelevated -> "unelevated"
+    Outlined -> "outlined"
+
 data IconProp
   = Before String
   | After String
@@ -85,29 +92,30 @@ button props =
 rootClassNames :: forall a. Props a -> Array HH.ClassName
 rootClassNames props = case props.variant of
   Text -> [ cls.button ]
-    <> case props.disabled /\ props.theme of
-      true /\ _ -> []
-      _ /\ Th.Primary -> [ Th.cls.themePrimary ]
-      _ /\ Th.Secondary -> [ Th.cls.themeSecondary ]
+    <> case Tuple props.disabled props.theme of
+      Tuple true _ -> []
+      Tuple _ Th.Primary -> [ Th.cls.themeTextPrimary ]
+      Tuple _ Th.Secondary -> [ Th.cls.themeTextSecondary ]
   Raised -> [ cls.button, cls.buttonRaised ]
-    <> case props.disabled /\ props.theme of
-      true /\ _ -> []
-      _ /\ Th.Primary -> [  Th.cls.themePrimaryBg, Th.cls.themeOnPrimary ]
-      _ /\ Th.Secondary -> [ Th.cls.themeSecondaryBg, Th.cls.themeOnSecondary ]
+    <> case Tuple props.disabled props.theme of
+      Tuple true _ -> []
+      Tuple _ t@Th.Primary -> [  Th.cls.themeBg t, Th.cls.themeTextOnPrimary ]
+      Tuple _ t@Th.Secondary -> [ Th.cls.themeBg t, Th.cls.themeTextOnSecondary ]
   Unelevated -> [ cls.button, cls.buttonUnelevated ]
-    <> case props.disabled /\ props.theme of
-      true /\ _ -> []
-      _ /\ Th.Primary -> [ Th.cls.themePrimaryBg, Th.cls.themeOnPrimary ]
-      _ /\ Th.Secondary -> [ Th.cls.themeSecondaryBg, Th.cls.themeOnSecondary ]
+    <> case Tuple props.disabled props.theme of
+      Tuple true _ -> []
+      Tuple _ t@Th.Primary -> [ Th.cls.themeBg t, Th.cls.themeTextOnPrimary ]
+      Tuple _ t@Th.Secondary -> [ Th.cls.themeBg t, Th.cls.themeTextOnSecondary ]
   Outlined -> [ cls.button, cls.buttonOutlined ]
-    <> case props.disabled /\ props.theme of
-      true /\ _ -> []
-      _ /\ Th.Primary -> [ Th.cls.themePrimary ]
-      _ /\ Th.Secondary -> [ Th.cls.themeSecondary ]
+    <> case Tuple props.disabled props.theme of
+      Tuple true _ -> []
+      Tuple _ Th.Primary -> [ Th.cls.themeTextPrimary ]
+      Tuple _ Th.Secondary -> [ Th.cls.themeTextSecondary ]
 
 cls ::
   { button :: HH.ClassName
   , buttonRipple :: HH.ClassName
+  , buttonVariant :: Variant -> HH.ClassName
   , buttonRaised :: HH.ClassName
   , buttonUnelevated :: HH.ClassName
   , buttonOutlined :: HH.ClassName
@@ -117,9 +125,13 @@ cls ::
 cls =
   { button: HH.ClassName "mdc-button"
   , buttonRipple: HH.ClassName "mdc-button__ripple"
+  , buttonVariant: \variant -> HH.ClassName $ prefix <> "--" <> show variant
   , buttonRaised: HH.ClassName "mdc-button--raised"
   , buttonUnelevated: HH.ClassName "mdc-button--unelevated"
   , buttonOutlined: HH.ClassName "mdc-button--outlined"
   , buttonLabel: HH.ClassName "mdc-button__label"
   , buttonIcon: HH.ClassName "mdc-button__icon"
   }
+
+prefix :: String
+prefix = "mdc-button"
