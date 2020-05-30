@@ -15,11 +15,3 @@ fs.readdir('./examples/images', (_, images) => {
     })
   })
 })
-
-const matchImage = file => {
-  const jpeg = /.+\.jpeg$/i
-  const jpg = /.+\.jpg$/i
-  const png = /.+\.png$/i
-  const gif = /.+\.gif$/i
-  return file.match(jpeg) || file.match(jpg) || file.match(png) || file.match(gif)
-}

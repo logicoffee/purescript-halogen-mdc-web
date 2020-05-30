@@ -4,6 +4,7 @@
   "license": "MIT",
   "scripts": {
     "build:examples": "spago build --path 'examples/**/*.purs' && parcel build examples/index.html && node postbuild.js",
+    "build:static": "node postbuild.js",
     "dev": "parcel examples/index.html"
   },
   "devDependencies": {
