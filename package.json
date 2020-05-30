@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "build:examples": "spago build --path 'examples/**/*.purs'",
+    "build:examples": "spago build --path 'examples/**/*.purs' && parcel build examples/index.html && node postbuild.js",
     "dev": "parcel examples/index.html"
   },
   "devDependencies": {
