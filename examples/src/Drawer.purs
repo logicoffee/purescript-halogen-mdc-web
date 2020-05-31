@@ -60,6 +60,10 @@ component = H.mkComponent
             { text = "Typography"
             , onClick = const $ Just $ OnClick Route.Typography
             }
+          , List.item List.defaultProps
+            { text = "Table"
+            , onClick = const $ Just $ OnClick Route.Table
+            }
           ]
         ]
       ]
