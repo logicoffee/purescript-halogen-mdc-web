@@ -1,5 +1,4 @@
 import Main from '../output/Main'
-import './style.scss'
 
 function main() {
   Main.main()

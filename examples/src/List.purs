@@ -9,7 +9,6 @@ import Halogen as H
 import Halogen.HTML as HH
 
 import Halogen.MDC.List as List
-import Halogen.MDC.ListItem as Item
 
 type State = Unit
 data Action = Initialize
@@ -26,28 +25,26 @@ component = H.mkComponent
     render :: State -> H.ComponentHTML Action () Aff
     render _ = HH.div_
       [ HH.div_
-        [ List.list
-            List.defaultProps
-            [ Item.item $ Item.defaultProps
-                { text = "first element"
-                }
-            , Item.item $ Item.defaultProps
-                { text = "second element"
-                }
-            ]
+        [ List.list List.Single
+          [ List.item $ List.defaultProps
+            { text = "first element"
+            }
+          , List.item $ List.defaultProps
+            { text = "second element"
+            }
+          ]
         ]
       , HH.div_
-        [ List.list
-            List.defaultProps
-            [ Item.item $ Item.defaultProps
-                { text = "first element"
-                , icon = Just "favorite"
-                }
-            , Item.item $ Item.defaultProps
-                { text = "second element"
-                , icon = Just "bookmark"
-                }
-            ]
+        [ List.list List.Single
+          [ List.item $ List.defaultProps
+            { text = "first element"
+            , icon = Just "favorite"
+            }
+          , List.item $ List.defaultProps
+            { text = "second element"
+            , icon = Just "bookmark"
+            }
+          ]
         ]
       ]
     evalSpec = H.defaultEval

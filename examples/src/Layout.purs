@@ -25,7 +25,7 @@ component = H.mkComponent
   where
     render :: State -> H.ComponentHTML Action () Aff
     render _ = HH.div_
-      [ Grid.outer Grid.defaultProps
+      [ Grid.outer Grid.Center
         [ Grid.inner
           [ Grid.cell 3 [ graySquare ]
           , Grid.cell 4 [ graySquare ]
