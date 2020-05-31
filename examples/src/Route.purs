@@ -7,3 +7,4 @@ data Route
   | Layout
   | Card
   | Typography
+  | Table

@@ -16,6 +16,7 @@ import Route as Route
 import Layout as Layout
 import Card as Card
 import Typography as Typography
+import Table as Table
 
 data State = State Route.Route
 data Action
@@ -42,6 +43,7 @@ render (State route) = HH.div_
       Route.Layout -> HH.slot (SProxy :: _ "layout") unit Layout.component unit absurd
       Route.Card -> HH.slot (SProxy :: _ "card") unit Card.component unit absurd
       Route.Typography -> HH.slot (SProxy :: _ "typography") unit Typography.component unit absurd
+      Route.Table -> HH.slot (SProxy :: _ "table") unit Table.component unit absurd
   ]
 
 handleAction :: Action -> H.HalogenM State Action Slots Void Aff Unit
@@ -59,6 +61,7 @@ type Slots =
   , layout :: SingleSlot
   , card :: SingleSlot
   , typography :: SingleSlot
+  , table :: SingleSlot
   )
 
 type SingleSlot = H.Slot (Const Void) Void Unit
