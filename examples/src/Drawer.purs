@@ -10,7 +10,6 @@ import Halogen as H
 import Halogen.HTML as HH
 import Halogen.MDC.Drawer as Drawer
 import Halogen.MDC.List as List
-import Halogen.MDC.ListItem as Item
 
 import Route as Route
 
@@ -30,35 +29,40 @@ component = H.mkComponent
   }
   where
     render :: State -> H.ComponentHTML Action () Aff
-    render _ = Drawer.drawer Drawer.defaultProps
-      [ List.list List.defaultProps
-        [ Item.item Item.defaultProps
-          { text = "Home"
-          , onClick = const $ Just $ OnClick Route.Home
-          }
-        , Item.item Item.defaultProps
-          { text = "Buttons"
-          , onClick = const $ Just $ OnClick Route.Button
-          }
-        , Item.item Item.defaultProps
-          { text = "Lists"
-          , onClick = const $ Just $ OnClick Route.List
-          }
-        , Item.item Item.defaultProps
-          { text = "Layout"
-          , onClick = const $ Just $ OnClick Route.Layout
-          }
-        , Item.item Item.defaultProps
-          { text = "Card"
-          , onClick = const $ Just $ OnClick Route.Card
-          }
-        , Item.item Item.defaultProps
-          { text = "Typography"
-          , onClick = const $ Just $ OnClick Route.Typography
-          }
+    render _ = Drawer.drawer Drawer.Permanent
+      [ Drawer.header
+        { title: "Contents"
+        , subtitle: Just "subtitle"
+        }
+      , Drawer.content
+        [ List.list List.Single
+          [ List.item List.defaultProps
+            { text = "Home"
+            , onClick = const $ Just $ OnClick Route.Home
+            }
+          , List.item List.defaultProps
+            { text = "Buttons"
+            , onClick = const $ Just $ OnClick Route.Button
+            }
+          , List.item List.defaultProps
+            { text = "Lists"
+            , onClick = const $ Just $ OnClick Route.List
+            }
+          , List.item List.defaultProps
+            { text = "Layout"
+            , onClick = const $ Just $ OnClick Route.Layout
+            }
+          , List.item List.defaultProps
+            { text = "Card"
+            , onClick = const $ Just $ OnClick Route.Card
+            }
+          , List.item List.defaultProps
+            { text = "Typography"
+            , onClick = const $ Just $ OnClick Route.Typography
+            }
+          ]
         ]
       ]
-
     evalSpec = H.defaultEval
       { handleAction = handleAction
       , initialize = Just Initialize

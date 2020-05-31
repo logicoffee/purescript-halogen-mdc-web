@@ -4,11 +4,14 @@ import Prelude
 
 import Data.Const (Const)
 import Effect.Aff (Aff)
+import CSS (paddingLeft, paddingRight, rem)
 
 import Halogen as H
 import Halogen.HTML as HH
+import Halogen.HTML.CSS as CSS
 import Halogen.MDC.Card as Card
 import Halogen.MDC.Button as Button
+import Halogen.MDC.Typography as Ty
 
 type State = Unit
 data Action
@@ -29,10 +32,20 @@ component = H.mkComponent
       ]
 
     textCard = Card.card
-      Card.defaultProps
       [ Card.primaryAction
-        [ HH.h2_ [ HH.text "Title" ]
-        , HH.div_ [ HH.text "lorem ipsum" ]
+        [ Card.media
+          { shape: Card.Wide
+          , url: "public/forest.jpg"
+          }
+          []
+        , HH.div
+          [ CSS.style do
+            paddingLeft $ rem 1.0
+            paddingRight $ rem 1.0
+          ]
+          [ Ty.typography { variant: Ty.H5, text: "Title" }
+          , Ty.typography { variant: Ty.Body1, text: "lorem ipsum" }
+          ]
         ]
       , Card.actions
         [ Card.actionButtons

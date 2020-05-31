@@ -12,6 +12,7 @@ You can edit this file as you like.
   , "halogen-vdom"
   , "psci-support"
   , "strings"
+  , "tuples"
   , "unsafe-coerce"
   , "web-uievents"
   ]

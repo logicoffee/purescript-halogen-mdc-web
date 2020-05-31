@@ -8,7 +8,9 @@ import Effect.Aff (Aff)
 import Halogen as H
 import Halogen.HTML as HH
 
-import Halogen.MDC.Button as Button
+import Halogen.MDC.Button as B
+import Halogen.MDC.Typography as Ty
+import Halogen.MDC.Theme as Th
 
 type State = Unit
 data Action = Initialize
@@ -27,43 +29,54 @@ component = H.mkComponent
   }
 
 render :: State -> H.ComponentHTML Action Slots Aff
-render _ = HH.div_
-  [ Button.button textButtonProps
-  , Button.button raisedButtonProps
-  , Button.button unelevatedButtonProps
-  , Button.button outlinedButtonProps
-  , Button.button disabledButtonProps
-  , Button.button textButtoWithIconProps
-  , Button.button raisedButtonWithIconProps
+render _ = HH.div_ $ map buttons
+  [ B.Text
+  , B.Raised
+  , B.Unelevated
+  , B.Outlined
+  ]
+
+buttons :: B.Variant -> forall w i. HH.HTML w i
+buttons variant = HH.div_
+  [ Ty.typography
+    { variant: Ty.Subtitle1
+    , text: case variant of
+        B.Text -> "Text Button"
+        B.Raised -> "Raised Button"
+        B.Unelevated -> "Unelevated Button"
+        B.Outlined -> "Outlined Button"
+    }
+  , B.button primaryProps
+  , B.button secondaryProps
+  , B.button withIconProps
+  , B.button disabledProps
   ]
   where
-    textButtonProps = Button.defaultProps { label = "text button" }
-    raisedButtonProps = Button.defaultProps
-      { label = "raised button"
-      , variant = Button.Raised
+    primaryProps = defaultProps
+      { label = "default"
+      , variant = variant
       }
-    unelevatedButtonProps = Button.defaultProps
-      { label = "unelevated button"
-      , variant = Button.Unelevated
+    secondaryProps = defaultProps
+      { label = "secondary"
+      , variant = variant
+      , theme = Th.Secondary
       }
-    outlinedButtonProps = Button.defaultProps
-      { label = "outlined button"
-      , variant = Button.Outlined
+    withIconProps = defaultProps
+      { label = "icon"
+      , variant = variant
+      , icon = Just $ B.Before "favorite"
       }
-    disabledButtonProps = Button.defaultProps
-      { label = "disabled button"
+    disabledProps = defaultProps
+      { label = "disabled"
+      , variant = variant
       , disabled = true
-      }
-    textButtoWithIconProps = Button.defaultProps
-      { label = "text button"
-      , icon = Just $ Button.Before "favorite"
-      }
-    raisedButtonWithIconProps = Button.defaultProps
-      { label = "raised button"
-      , variant = Button.Raised
-      , icon = Just $ Button.After "bookmark"
       }
 
 handleAction :: Action -> H.HalogenM State Action Slots Message Aff Unit
 handleAction = case _ of
   Initialize -> pure unit
+
+defaultProps :: forall a. B.Props a
+defaultProps = B.defaultProps
+  { extraClasses = [ HH.ClassName "demo-button" ]
+  }

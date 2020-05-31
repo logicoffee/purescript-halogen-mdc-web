@@ -23,12 +23,12 @@ component = H.mkComponent
   where
     render :: State -> H.ComponentHTML Action () Aff
     render _ = HH.div_
-      [ T.typography { variant: T.Headline1, text: "Headline1" }
-      , T.typography { variant: T.Headline2, text: "Headline2" }
-      , T.typography { variant: T.Headline3, text: "Headline3" }
-      , T.typography { variant: T.Headline4, text: "Headline4" }
-      , T.typography { variant: T.Headline5, text: "Headline5" }
-      , T.typography { variant: T.Headline6, text: "Headline6" }
+      [ T.typography { variant: T.H1, text: "Headline1" }
+      , T.typography { variant: T.H2, text: "Headline2" }
+      , T.typography { variant: T.H3, text: "Headline3" }
+      , T.typography { variant: T.H4, text: "Headline4" }
+      , T.typography { variant: T.H5, text: "Headline5" }
+      , T.typography { variant: T.H6, text: "Headline6" }
       , T.typography { variant: T.Subtitle1, text: "Subtitle1" }
       , T.typography { variant: T.Subtitle2, text: "Subtitle2" }
       , T.typography { variant: T.Body1, text: "Body1" }
